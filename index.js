@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 import mongoose from "mongoose";
 import authroutes from "./routes/authroute.js";
 import assetroutes from "./routes/Assetsroute.js";
