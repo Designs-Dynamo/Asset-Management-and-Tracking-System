@@ -7,7 +7,6 @@ import assetUpdaterotes from "./routes/assetUpdateroutes.js";
 
 
 const app= express();
-const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
@@ -18,7 +17,7 @@ if (!cached) {
   cached = global.mongoose = { conn: null, promise: null };
 }
 
-export default async function connectDB() {
+async function connectDB() {
   if (cached.conn) return cached.conn;
 
   if (!cached.promise) {
@@ -30,12 +29,9 @@ export default async function connectDB() {
   cached.conn = await cached.promise;
   return cached.conn;
 }
-app.use((req,res,next) => {
-  if (!isconneted) {
-    connectmongodb();
-  }
-  next();
-});
+
+// 🔴 CRITICAL: wait for DB BEFORE routes
+await connectDB();
 
 app.use("/api/auth", authroutes);
 app.use("/api/assets", assetroutes);
