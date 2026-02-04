@@ -11,7 +11,7 @@ router.post("/login", loginUser);
 /* ADMIN ONLY */
 router.post("/register",auth, isAdmin, registerUser);
 
-router.get("/users", auth, isAdmin, getAllUsers);
+router.get("/users", getAllUsers);
 
 router.delete("/users/:id", auth, isAdmin, deleteUser);
 
