@@ -40,7 +40,7 @@ app.get("/", (req, res) => {
   res.send("ässet management backend");
 });
 
-module.exports = app;
+export default app;
 
 // mongoose.connect(process.env.MONGO_URL)
 //   .then(() => console.log('MongoDB Atlas connected successfully!'))
