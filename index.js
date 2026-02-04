@@ -12,17 +12,23 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-let isconneted = false;
+let cached = global.mongoose;
 
-async function connectmongodb(){
-  try {
-    await mongoose.connect(process.env.MONGO_URL)
-    isconneted = true;
-    console.log('MongoDB Atlas connected successfully!');
-    
-  } catch (err) {
-    console.error('MongoDB connection error:', err);
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
+}
+
+export default async function connectDB() {
+  if (cached.conn) return cached.conn;
+
+  if (!cached.promise) {
+    cached.promise = mongoose.connect(process.env.MONGO_URL, {
+      bufferCommands: false,
+    });
   }
+
+  cached.conn = await cached.promise;
+  return cached.conn;
 }
 app.use((req,res,next) => {
   if (!isconneted) {
