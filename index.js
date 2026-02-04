@@ -6,7 +6,7 @@ import authroutes from "./routes/authroute.js";
 import assetroutes from "./routes/Assetsroute.js";
 import assetUpdaterotes from "./routes/assetUpdateroutes.js";
 
-dotenv.config();
+
 const app= express();
 const PORT = process.env.PORT || 5000;
 
